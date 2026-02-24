@@ -10,8 +10,8 @@
     <style>
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: #0f172a; 
-            background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 100%);
+            background-color: #f0f9ff; 
+            background-image: radial-gradient(circle at 50% 0%, #e0f2fe 0%, #f0f9ff 100%);
             margin: 0; 
             display: flex; 
             justify-content: center; 
@@ -29,8 +29,8 @@
             opacity: 0.5;
             animation: float 10s infinite ease-in-out;
         }
-        .blob-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: #3b82f6; animation-delay: 0s; }
-        .blob-2 { bottom: -10%; right: -10%; width: 400px; height: 400px; background: #6366f1; animation-delay: -5s; }
+        .blob-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: #bae6fd; animation-delay: 0s; }
+        .blob-2 { bottom: -10%; right: -10%; width: 400px; height: 400px; background: #e0e7ff; animation-delay: -5s; }
 
         @keyframes float {
             0%, 100% { transform: translate(0, 0); }
@@ -38,16 +38,16 @@
         }
 
         .scanner-card { 
-            background: rgba(255, 255, 255, 0.95); 
+            background: rgba(255, 255, 255, 0.85); 
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            padding: 40px 30px; 
-            border-radius: 32px; 
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); 
+            padding: 25px 20px; 
+            border-radius: 24px; 
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1); 
             width: 90%; 
-            max-width: 480px; 
+            max-width: 360px; 
             text-align: center; 
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
         }
@@ -57,22 +57,23 @@
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        .logo-img { width: 70px; margin-bottom: 15px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
-        h3 { color: #1e293b; margin: 0 0 8px 0; font-weight: 800; font-size: 1.5rem; letter-spacing: -0.5px; }
-        p { color: #64748b; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5; }
+        .logo-img { width: 60px; margin-bottom: 10px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05)); }
+        h3 { color: #0f172a; margin: 0 0 5px 0; font-weight: 800; font-size: 1.25rem; letter-spacing: -0.5px; }
+        p { color: #64748b; font-size: 0.85rem; margin-bottom: 20px; line-height: 1.4; }
         
         .scanner-wrapper {
             position: relative;
-            border-radius: 24px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.15);
-            margin-bottom: 25px;
-            border: 4px solid #f1f5f9;
-            background: #000;
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border: 3px solid #fff;
+            background: transparent;
         }
 
         #reader { 
             width: 100%; 
+            color: #1e293b;
         }
 
         /* Laser Animation */
@@ -98,7 +99,7 @@
         .btn-cancel { 
             background: #fff; 
             color: #ef4444; 
-            border: 2px solid #fee2e2; 
+            border: 1px solid #fee2e2; 
             padding: 14px 20px; 
             border-radius: 16px; 
             cursor: pointer; 
@@ -116,12 +117,13 @@
         .btn-cancel:active { transform: translateY(0); }
 
         /* Customizing Library Styles */
-        #reader__dashboard_section_csr span { display: none !important; }
+        /* #reader__dashboard_section_csr span { display: none !important; } */
         #reader button { 
-            background: #eff6ff; color: #2563eb; border: none; 
-            padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 10px;
+            background: #3b82f6; color: #fff; border: none; 
+            padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; margin: 10px 5px;
         }
         #reader select { padding: 8px; border-radius: 8px; border: 1px solid #cbd5e1; width: 100%; margin-bottom: 10px; }
+        #reader__dashboard_section_csr span { display: block !important; margin-bottom: 5px; font-size: 0.9rem; color: #64748b; }
         #reader video { object-fit: cover; border-radius: 20px; }
     </style>
 </head>
@@ -178,7 +180,7 @@
         // Menyalakan mesin scanner kamera
         let html5QrcodeScanner = new Html5QrcodeScanner(
             "reader",
-            { fps: 10, qrbox: {width: 250, height: 250}, aspectRatio: 1.0 },
+            { fps: 10, qrbox: {width: 250, height: 250}, aspectRatio: 1.0, rememberLastUsedCamera: false },
             /* verbose= */ false);
         html5QrcodeScanner.render(onScanSuccess, onScanFailure);
     </script>

@@ -1,1 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scanner WR - PT HYDRAXLE PERKASA</title>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #f1f5f9; 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+        }
+        .scanner-card { 
+            background: white; 
+            padding: 30px 20px; 
+            border-radius: 25px; 
+            box-shadow: 0 15px 35px rgba(10, 35, 66, 0.1); 
+            width: 90%; 
+            max-width: 500px; 
+            text-align: center; 
+            border-top: 5px solid #0a2342;
+        }
+        .logo-img { width: 60px; margin-bottom: 10px; }
+        h3 { color: #0a2342; margin: 0 0 5px 0; font-weight: 800; }
+        p { color: #64748b; font-size: 0.9rem; margin-bottom: 20px; }
+        #reader { 
+            width: 100%; 
+            border-radius: 15px; 
+            overflow: hidden; 
+            border: 2px solid #e2e8f0;
+            margin-bottom: 20px;
+        }
+        .btn-cancel { 
+            background: #e11d48; 
+            color: white; 
+            border: none; 
+            padding: 12px 20px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            width: 100%; 
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+        .btn-cancel:hover { background: #be123c; }
+    </style>
+</head>
+<body>
 
+    <div class="scanner-card">
+        <img src="https://iili.io/fbawUge.md.png" class="logo-img" alt="Logo">
+        <h3>Live Scanner PC/Laptop</h3>
+        <p>Arahkan kamera ke QR Code Komponen</p>
+        
+        <div id="reader"></div>
+        
+        <button class="btn-cancel" onclick="window.close()">
+            <i class="fas fa-times me-2"></i> Batal / Tutup Scanner
+        </button>
+    </div>
+
+    <script>
+        // Fungsi ini berjalan jika QR berhasil terbaca
+        function onScanSuccess(decodedText, decodedResult) {
+            // 1. Matikan kamera segera setelah berhasil
+            html5QrcodeScanner.clear();
+            
+            // 2. Cek apakah halaman ini dibuka oleh sistem utama (GAS)
+            if (window.opener) {
+                // Tembakkan data hasil scan ke tab GAS
+                window.opener.postMessage({ type: "QR_RESULT_GITHUB", data: decodedText }, "*");
+                
+                // Ubah tampilan menjadi sukses
+                document.querySelector('.scanner-card').innerHTML = `
+                    <h3 style="color: #10b981;"><i class="fas fa-check-circle fa-3x mb-3"></i><br>Berhasil!</h3>
+                    <p>Data terkirim ke sistem. Jendela ini akan tertutup otomatis...</p>
+                `;
+                
+                // Tutup tab GitHub ini setelah 1.5 detik
+                setTimeout(() => { window.close(); }, 1500);
+            } else {
+                // Jika iseng dibuka langsung tanpa lewat GAS
+                alert("Hasil Scan: " + decodedText + "\n\nHarap buka scanner ini dari Aplikasi Utama PT HYDRAXLE PERKASA.");
+            }
+        }
+
+        // Fungsi ini berjalan terus menerus mencari QR, kita abaikan errornya
+        function onScanFailure(error) {
+            // handle scan failure, usually better to ignore and keep scanning.
+        }
+
+        // Menyalakan mesin scanner kamera
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader",
+            { fps: 10, qrbox: {width: 250, height: 250} },
+            /* verbose= */ false);
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    </script>
+
+</body>
+</html>

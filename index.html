@@ -45,7 +45,7 @@
             border-radius: 24px; 
             box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1); 
             width: 90%; 
-            max-width: 360px; 
+            max-width: 340px; 
             text-align: center; 
             border: 1px solid rgba(255, 255, 255, 0.6);
             animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
@@ -62,22 +62,32 @@
         p { color: #64748b; font-size: 0.85rem; margin-bottom: 20px; line-height: 1.4; }
         
         .scanner-wrapper {
-            position: relative;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            border: 3px solid #fff;
-            background: transparent;
+            width: 100%;
+            margin-bottom: 15px;
         }
 
         #reader { 
             width: 100%; 
-            color: #1e293b;
+            display: flex;
+            flex-direction: column-reverse; /* Memindahkan tombol ke bawah kamera */
+            gap: 15px;
+            border: none !important;
         }
 
-        /* Laser Animation */
-        .laser {
+        /* Area Kamera (Viewfinder) */
+        #reader__scan_region {
+            background: #000;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.15);
+            border: 4px solid #fff;
+            min-height: 200px;
+        }
+
+        /* Laser Animation - Menggunakan pseudo-element agar menempel di kamera */
+        #reader__scan_region::after {
+            content: '';
             position: absolute;
             top: 10%; left: 5%; right: 5%;
             height: 2px;
@@ -119,9 +129,20 @@
         /* Customizing Library Styles */
         /* #reader__dashboard_section_csr span { display: none !important; } */
         #reader button { 
-            background: #3b82f6; color: #fff; border: none; 
-            padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; margin: 10px 5px;
+            background: #eff6ff; 
+            color: #2563eb; 
+            border: 1px solid #bfdbfe; 
+            padding: 12px 16px; 
+            border-radius: 12px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            margin: 5px 0;
+            width: 100%;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: all 0.2s;
         }
+        #reader button:hover { background: #dbeafe; }
+
         #reader select { padding: 8px; border-radius: 8px; border: 1px solid #cbd5e1; width: 100%; margin-bottom: 10px; }
         #reader__dashboard_section_csr span { display: block !important; margin-bottom: 5px; font-size: 0.9rem; color: #64748b; }
         #reader video { object-fit: cover; border-radius: 20px; }
@@ -139,7 +160,6 @@
         
         <div class="scanner-wrapper">
             <div id="reader"></div>
-            <div class="laser"></div>
         </div>
         
         <button class="btn-cancel" onclick="window.close()">
